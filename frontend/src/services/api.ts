@@ -45,8 +45,11 @@ class ApiService {
 
   async validateApiKey(apiKey: string): Promise<boolean> {
     try {
+      console.log('validateApiKey - Headers being sent:', this.getHeaders());
       const response = await axios.post(`${API_ENDPOINT}/validate-key`, {
         apiKey,
+      }, {
+        headers: this.getHeaders()
       });
       return response.data.valid;
     } catch (error) {
