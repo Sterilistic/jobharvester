@@ -36,7 +36,7 @@ declare global {
 }
 
 // Get all jobs
-router.get('/jobs', validateApiKey, async (req, res) => {
+router.get('/jobs', validateApiKey, async (req: express.Request, res: express.Response) => {
   try {
     const page = parseInt(req.query.page as string) || 1;
     const perPage = parseInt(req.query.per_page as string) || 50;
@@ -50,7 +50,7 @@ router.get('/jobs', validateApiKey, async (req, res) => {
 });
 
 // Get job by ID
-router.get('/jobs/:id', validateApiKey, async (req, res) => {
+router.get('/jobs/:id', validateApiKey, async (req: express.Request, res: express.Response) => {
   try {
     const jobId = parseInt(req.params.id);
     
@@ -67,7 +67,7 @@ router.get('/jobs/:id', validateApiKey, async (req, res) => {
 });
 
 // Get candidates for a specific job
-router.get('/jobs/:id/candidates', validateApiKey, async (req, res) => {
+router.get('/jobs/:id/candidates', validateApiKey, async (req: express.Request, res: express.Response) => {
   try {
     const jobId = parseInt(req.params.id);
     const page = parseInt(req.query.page as string) || 1;
@@ -86,7 +86,7 @@ router.get('/jobs/:id/candidates', validateApiKey, async (req, res) => {
 });
 
 // Get all candidates
-router.get('/candidates', validateApiKey, async (req, res) => {
+router.get('/candidates', validateApiKey, async (req: express.Request, res: express.Response) => {
   try {
     const page = parseInt(req.query.page as string) || 1;
     const perPage = parseInt(req.query.per_page as string) || 50;
@@ -100,7 +100,7 @@ router.get('/candidates', validateApiKey, async (req, res) => {
 });
 
 // Validate API key endpoint
-router.post('/validate-key', async (req, res) => {
+router.post('/validate-key', async (req: express.Request, res: express.Response) => {
   try {
     const { apiKey } = req.body;
     
