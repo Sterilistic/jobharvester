@@ -21,7 +21,13 @@ const limiter = rateLimit({
 app.use(helmet());
 app.use(limiter);
 app.use(cors({
-  origin: process.env.FRONTEND_URL || 'http://localhost:3000',
+  origin: process.env.NODE_ENV === 'production' 
+    ? [
+        process.env.FRONTEND_URL || 'https://jobharvester.vercel.app',
+        'https://jobharvester.vercel.app',
+        'https://jobharvester-frontend.vercel.app'
+      ]
+    : true, // Allow all origins in development
   credentials: true
 }));
 app.use(express.json());
