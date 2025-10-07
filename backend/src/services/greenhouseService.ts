@@ -1,6 +1,11 @@
 import axios, { AxiosResponse } from 'axios';
 import { Job, Candidate, GreenhouseApiResponse } from '../types/greenhouse';
 
+interface LinkHeader {
+  url: string;
+  rel: string;
+}
+
 export class GreenhouseService {
   private baseURL = 'https://harvest.greenhouse.io/v1';
   private apiKey: string;
@@ -29,32 +34,36 @@ export class GreenhouseService {
         }
       );
 
-      // For Greenhouse API, we need to estimate total count
-      // If we get a full page, there might be more data
-      let total = response.data.length;
+      // Parse Link header from Greenhouse API response
+      const linkHeader = response.headers.link;
       let hasNextPage = false;
-      
-      if (response.data.length === perPage) {
-        // Check if there's a next page by requesting one more item
-        try {
-          const nextPageResponse = await axios.get(
-            `${this.baseURL}/jobs`,
-            {
-              headers: this.getAuthHeaders(),
-              params: {
-                page: page + 1,
-                per_page: 1,
-              },
-            }
-          );
-          hasNextPage = nextPageResponse.data.length > 0;
-          if (hasNextPage) {
-            total = (page * perPage) + 1; // Estimate total
+      let hasPrevPage = false;
+      let total = response.data.length;
+
+      if (linkHeader) {
+        // Parse Link header to determine pagination state
+        const links: LinkHeader[] = linkHeader.split(',').map((link: string) => {
+          const match = link.match(/<([^>]+)>;\s*rel="([^"]+)"/);
+          return match ? { url: match[1], rel: match[2] } : null;
+        }).filter(Boolean) as LinkHeader[];
+
+        hasNextPage = links.some(link => link.rel === 'next');
+        hasPrevPage = links.some(link => link.rel === 'prev');
+        
+        // Try to extract total from 'last' link
+        const lastLink = links.find(link => link.rel === 'last');
+        if (lastLink) {
+          const lastPageMatch = lastLink.url.match(/page=(\d+)/);
+          if (lastPageMatch) {
+            total = parseInt(lastPageMatch[1]) * perPage;
           }
-        } catch (e) {
-          // If we can't check next page, assume current page is full
-          hasNextPage = true;
-          total = (page * perPage) + 1;
+        }
+      } else {
+        // Fallback: if no Link header, estimate based on current page
+        hasNextPage = response.data.length === perPage;
+        hasPrevPage = page > 1;
+        if (hasNextPage) {
+          total = (page * perPage) + 1; // Estimate total
         }
       }
 
@@ -65,7 +74,7 @@ export class GreenhouseService {
           page,
           per_page: perPage,
           has_next_page: hasNextPage,
-          has_prev_page: page > 1,
+          has_prev_page: hasPrevPage,
         },
       };
     } catch (error: any) {
@@ -102,35 +111,47 @@ export class GreenhouseService {
         }
       );
 
-      // Check if there's a next page
+      // Parse Link header from Greenhouse API response
+      const linkHeader = response.headers.link;
       let hasNextPage = false;
-      if (response.data.length === perPage) {
-        try {
-          const nextPageResponse = await axios.get(
-            `${this.baseURL}/candidates`,
-            {
-              headers: this.getAuthHeaders(),
-              params: {
-                job_id: jobId,
-                page: page + 1,
-                per_page: 1,
-              },
-            }
-          );
-          hasNextPage = nextPageResponse.data.length > 0;
-        } catch (e) {
-          hasNextPage = true;
+      let hasPrevPage = false;
+      let total = response.data.length;
+
+      if (linkHeader) {
+        // Parse Link header to determine pagination state
+        const links: LinkHeader[] = linkHeader.split(',').map((link: string) => {
+          const match = link.match(/<([^>]+)>;\s*rel="([^"]+)"/);
+          return match ? { url: match[1], rel: match[2] } : null;
+        }).filter(Boolean) as LinkHeader[];
+
+        hasNextPage = links.some(link => link.rel === 'next');
+        hasPrevPage = links.some(link => link.rel === 'prev');
+        
+        // Try to extract total from 'last' link
+        const lastLink = links.find(link => link.rel === 'last');
+        if (lastLink) {
+          const lastPageMatch = lastLink.url.match(/page=(\d+)/);
+          if (lastPageMatch) {
+            total = parseInt(lastPageMatch[1]) * perPage;
+          }
+        }
+      } else {
+        // Fallback: if no Link header, estimate based on current page
+        hasNextPage = response.data.length === perPage;
+        hasPrevPage = page > 1;
+        if (hasNextPage) {
+          total = (page * perPage) + 1; // Estimate total
         }
       }
 
       return {
         candidates: response.data,
         meta: {
-          total: response.data.length,
+          total,
           page,
           per_page: perPage,
           has_next_page: hasNextPage,
-          has_prev_page: page > 1,
+          has_prev_page: hasPrevPage,
         },
       };
     } catch (error: any) {
@@ -151,34 +172,47 @@ export class GreenhouseService {
         }
       );
 
-      // Check if there's a next page
+      // Parse Link header from Greenhouse API response
+      const linkHeader = response.headers.link;
       let hasNextPage = false;
-      if (response.data.length === perPage) {
-        try {
-          const nextPageResponse = await axios.get(
-            `${this.baseURL}/candidates`,
-            {
-              headers: this.getAuthHeaders(),
-              params: {
-                page: page + 1,
-                per_page: 1,
-              },
-            }
-          );
-          hasNextPage = nextPageResponse.data.length > 0;
-        } catch (e) {
-          hasNextPage = true;
+      let hasPrevPage = false;
+      let total = response.data.length;
+
+      if (linkHeader) {
+        // Parse Link header to determine pagination state
+        const links: LinkHeader[] = linkHeader.split(',').map((link: string) => {
+          const match = link.match(/<([^>]+)>;\s*rel="([^"]+)"/);
+          return match ? { url: match[1], rel: match[2] } : null;
+        }).filter(Boolean) as LinkHeader[];
+
+        hasNextPage = links.some(link => link.rel === 'next');
+        hasPrevPage = links.some(link => link.rel === 'prev');
+        
+        // Try to extract total from 'last' link
+        const lastLink = links.find(link => link.rel === 'last');
+        if (lastLink) {
+          const lastPageMatch = lastLink.url.match(/page=(\d+)/);
+          if (lastPageMatch) {
+            total = parseInt(lastPageMatch[1]) * perPage;
+          }
+        }
+      } else {
+        // Fallback: if no Link header, estimate based on current page
+        hasNextPage = response.data.length === perPage;
+        hasPrevPage = page > 1;
+        if (hasNextPage) {
+          total = (page * perPage) + 1; // Estimate total
         }
       }
 
       return {
         candidates: response.data,
         meta: {
-          total: response.data.length,
+          total,
           page,
           per_page: perPage,
           has_next_page: hasNextPage,
-          has_prev_page: page > 1,
+          has_prev_page: hasPrevPage,
         },
       };
     } catch (error: any) {
