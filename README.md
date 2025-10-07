@@ -1,10 +1,10 @@
 # JobHarvester
 
-A secure full-stack application that integrates with the Greenhouse Harvest API to display job listings and candidate information.
+A full-stack application that integrates with the Greenhouse Harvest API to display job listings and candidate information.
 
 ## Features
 
-- **Secure Authentication**: Backend API key protection with CORS restrictions
+- **Authentication**: Backend API key protection with CORS restrictions
 - **Job Management**: Browse and view job listings with pagination
 - **Candidate Tracking**: View candidates for each job with pagination
 - **Modern UI**: Built with ShadCN UI components and Tailwind CSS
