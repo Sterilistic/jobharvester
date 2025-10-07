@@ -54,7 +54,6 @@ A full-stack application that integrates with the Greenhouse Harvest API to disp
 
 4. Update `.env` with your configuration:
    ```
-   GREENHOUSE_API_KEY=<API KEY>
    FRONTEND_URL=http://localhost:3000
    PORT=3001
    ```
@@ -106,7 +105,6 @@ A full-stack application that integrates with the Greenhouse Harvest API to disp
 
 2. Configure environment variables:
    ```
-   GREENHOUSE_API_KEY=<API KEY>
    FRONTEND_URL=https://your-frontend.vercel.app
    NODE_ENV=production
    ```

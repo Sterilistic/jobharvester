@@ -23,9 +23,7 @@ app.use(limiter);
 app.use(cors({
   origin: process.env.NODE_ENV === 'production' 
     ? [
-        process.env.FRONTEND_URL || 'https://jobharvester.vercel.app',
-        'https://jobharvester.vercel.app',
-        'https://jobharvester-frontend.vercel.app'
+        process.env.FRONTEND_URL || 'https://jobharvester.vercel.app'
       ]
     : true, // Allow all origins in development
   credentials: true

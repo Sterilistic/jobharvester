@@ -16,7 +16,6 @@
 
 3. **Environment Variables**
    ```
-   GREENHOUSE_API_KEY=08c74138d0466463988a945a8becdeaa-9
    FRONTEND_URL=https://your-frontend.vercel.app
    NODE_ENV=production
    ```
@@ -58,7 +57,7 @@
 
 2. **Test Frontend**
    - Visit your Vercel URL
-   - Enter API key: `08c74138d0466463988a945a8becdeaa-9`
+   - Enter your Greenhouse API key
    - Browse jobs and candidates
 
 ## Troubleshooting
