@@ -1,7 +1,7 @@
 const axios = require('axios');
 
 const API_KEY = '08c74138d0466463988a945a8becdeaa-9';
-const BASE_URL = 'http://localhost:3001/api/greenhouse';
+const BASE_URL = 'http://localhost:3001';
 
 async function testGreenhouseLinkHeaders() {
   console.log('Testing Greenhouse Link Headers Compliance\n');
