@@ -2,7 +2,7 @@ import axios from 'axios';
 import { Job, Candidate, ApiResponse } from '../types/greenhouse';
 
 const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:3001';
-const API_ENDPOINT = `${API_BASE_URL}/api/greenhouse`;
+const API_ENDPOINT = `${API_BASE_URL}`;
 // Backend API key removed - security handled by CORS and rate limiting
 
 class ApiService {

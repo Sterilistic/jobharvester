@@ -31,7 +31,7 @@ app.use(cors({
 app.use(express.json());
 
 // Routes (protected by CORS and rate limiting)
-app.use('/api/greenhouse', greenhouseRouter);
+app.use('/', greenhouseRouter);
 
 // Health check endpoint
 app.get('/health', (req: express.Request, res: express.Response) => {
