@@ -37,13 +37,6 @@ const validateBackendApiKey = (req: express.Request, res: express.Response, next
   const backendApiKey = req.headers['x-backend-api-key'] as string;
   const expectedKey = process.env.BACKEND_API_KEY;
   
-  // Debug: Log what we're receiving
-  console.log('Backend received headers:', {
-    'x-backend-api-key': backendApiKey,
-    'expected-key': expectedKey,
-    'match': backendApiKey === expectedKey
-  });
-  
   if (!expectedKey) {
     return res.status(500).json({ error: 'Backend API key not configured' });
   }

@@ -3,7 +3,7 @@ import { Job, Candidate, ApiResponse } from '../types/greenhouse';
 
 const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:3001';
 const API_ENDPOINT = `${API_BASE_URL}/api/greenhouse`;
-const BACKEND_API_KEY = process.env.REACT_APP_BACKEND_API_KEY || '77089223a8ed37cfa9ba5ea9b8c36681';
+const BACKEND_API_KEY = process.env.REACT_APP_BACKEND_API_KEY || 'your-backend-api-key';
 
 class ApiService {
   private apiKey: string | null = null;
@@ -26,16 +26,6 @@ class ApiService {
       throw new Error('API key not set');
     }
     
-    // Debug: Check what values we're getting
-    console.log('Environment check:');
-    console.log('REACT_APP_BACKEND_API_KEY:', process.env.REACT_APP_BACKEND_API_KEY);
-    console.log('BACKEND_API_KEY constant:', BACKEND_API_KEY);
-    console.log('Headers being sent:', {
-      'x-api-key': apiKey,
-      'x-backend-api-key': BACKEND_API_KEY,
-      'Content-Type': 'application/json',
-    });
-    
     return {
       'x-api-key': apiKey,
       'x-backend-api-key': BACKEND_API_KEY,
@@ -45,7 +35,6 @@ class ApiService {
 
   async validateApiKey(apiKey: string): Promise<boolean> {
     try {
-      console.log('validateApiKey - Headers being sent:', this.getHeaders());
       const response = await axios.post(`${API_ENDPOINT}/validate-key`, {
         apiKey,
       }, {
