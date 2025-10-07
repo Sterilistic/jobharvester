@@ -6,6 +6,7 @@ import Pagination from './Pagination';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/card';
 import { Badge } from './ui/badge';
 import { Button } from './ui/button';
+import { Building, FileText, Linkedin, Mail } from 'lucide-react';
 
 const JobDetails: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -106,8 +107,8 @@ const JobDetails: React.FC = () => {
         </Button>
       </div>
 
-      <div className="grid gap-6 lg:grid-cols-3">
-        <div className="lg:col-span-2">
+      <div className="grid gap-6 lg:grid-cols-5">
+        <div className="lg:col-span-3">
           <Card className="mb-6">
             <CardHeader>
               <div className="flex items-start justify-between">
@@ -182,7 +183,7 @@ const JobDetails: React.FC = () => {
           </Card>
         </div>
 
-        <div>
+        <div className="lg:col-span-2">
           <Card>
             <CardHeader>
               <CardTitle>Candidates ({candidates.length})</CardTitle>
@@ -206,7 +207,7 @@ const JobDetails: React.FC = () => {
                         
                         {candidate.email_addresses.length > 0 && (
                           <div className="text-sm text-muted-foreground">
-                            📧 {candidate.email_addresses[0].value}
+                            <span className="flex items-center gap-2"><Mail /> {candidate.email_addresses[0].value}</span>
                           </div>
                         )}
                         
@@ -218,14 +219,14 @@ const JobDetails: React.FC = () => {
                               rel="noopener noreferrer"
                               className="text-primary hover:underline"
                             >
-                              🌐 {candidate.website_addresses[0].value}
+                              <span className="flex items-center gap-2"><Linkedin /> {candidate.website_addresses[0].value}</span>
                             </a>
                           </div>
                         )}
                         
                         {candidate.company && (
                           <div className="text-sm text-muted-foreground">
-                            🏢 {candidate.company}
+                            <span className="flex items-center gap-2"><Building /> {candidate.company}</span>
                             {candidate.title && ` - ${candidate.title}`}
                           </div>
                         )}
@@ -238,7 +239,7 @@ const JobDetails: React.FC = () => {
                               rel="noopener noreferrer"
                               className="text-primary hover:underline"
                             >
-                              📄 Resume
+                              <span className="flex items-center gap-2"><FileText /> Resume</span>
                             </a>
                           </div>
                         )}
