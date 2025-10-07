@@ -17,7 +17,6 @@
 3. **Environment Variables**
    ```
    GREENHOUSE_API_KEY=08c74138d0466463988a945a8becdeaa-9
-   BACKEND_API_KEY=77089223a8ed37cfa9ba5ea9b8c36681
    FRONTEND_URL=https://your-frontend.vercel.app
    NODE_ENV=production
    ```
@@ -43,7 +42,6 @@
 3. **Environment Variables**
    ```
    REACT_APP_API_URL=https://your-backend-url.onrender.com
-   REACT_APP_BACKEND_API_KEY=77089223a8ed37cfa9ba5ea9b8c36681
    ```
 
 4. **Deploy**
@@ -73,7 +71,7 @@
 ### Frontend Problems
 - **Build fails**: Check Vercel logs, verify root directory is `frontend`
 - **API errors**: Ensure `REACT_APP_API_URL` is just the base URL (no `/api/greenhouse`)
-- **401 errors**: Verify `REACT_APP_BACKEND_API_KEY` matches backend's `BACKEND_API_KEY`
+- **CORS errors**: Verify `FRONTEND_URL` in backend matches your Vercel URL exactly
 
 ### "Could not find index.html" Error
 - Root Directory must be `frontend`

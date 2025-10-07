@@ -55,7 +55,6 @@ A full-stack application that integrates with the Greenhouse Harvest API to disp
 4. Update `.env` with your configuration:
    ```
    GREENHOUSE_API_KEY=<API KEY>
-   BACKEND_API_KEY=<GENERATED_SECURE_KEY>
    FRONTEND_URL=http://localhost:3000
    PORT=3001
    ```
@@ -87,7 +86,6 @@ A full-stack application that integrates with the Greenhouse Harvest API to disp
 4. Update `.env` with your backend URL:
    ```
    REACT_APP_API_URL=http://localhost:3001
-   REACT_APP_BACKEND_API_KEY=<SAME_AS_BACKEND>
    ```
 
 5. Start the development server:
@@ -109,7 +107,6 @@ A full-stack application that integrates with the Greenhouse Harvest API to disp
 2. Configure environment variables:
    ```
    GREENHOUSE_API_KEY=<API KEY>
-   BACKEND_API_KEY=<GENERATED_SECURE_KEY>
    FRONTEND_URL=https://your-frontend.vercel.app
    NODE_ENV=production
    ```
@@ -130,7 +127,6 @@ A full-stack application that integrates with the Greenhouse Harvest API to disp
 2. Set environment variables:
    ```
    REACT_APP_API_URL=https://your-backend-url.onrender.com
-   REACT_APP_BACKEND_API_KEY=<SAME_AS_BACKEND>
    ```
 
 3. Deploy to Vercel:
@@ -152,7 +148,6 @@ A full-stack application that integrates with the Greenhouse Harvest API to disp
 
 All API requests require:
 - `x-api-key`: Greenhouse API key
-- `x-backend-api-key`: Backend API key for security
 
 ## Design Decisions
 
@@ -170,7 +165,6 @@ All API requests require:
 - **State Management**: Local state management with React hooks for simplicity
 
 ### Security Features
-- **Backend API Key Protection**: All routes protected with `x-backend-api-key` header
 - **CORS Restrictions**: Only allows requests from configured frontend URLs
 - **Rate Limiting**: 100 requests per 15 minutes per IP
 - **Environment Variables**: All sensitive data stored securely

@@ -3,7 +3,7 @@ import { Job, Candidate, ApiResponse } from '../types/greenhouse';
 
 const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:3001';
 const API_ENDPOINT = `${API_BASE_URL}/api/greenhouse`;
-const BACKEND_API_KEY = process.env.REACT_APP_BACKEND_API_KEY || 'your-backend-api-key';
+// Backend API key removed - security handled by CORS and rate limiting
 
 class ApiService {
   private apiKey: string | null = null;
@@ -28,7 +28,6 @@ class ApiService {
     
     return {
       'x-api-key': apiKey,
-      'x-backend-api-key': BACKEND_API_KEY,
       'Content-Type': 'application/json',
     };
   }

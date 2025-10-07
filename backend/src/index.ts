@@ -32,24 +32,8 @@ app.use(cors({
 }));
 app.use(express.json());
 
-// API Key middleware for backend protection
-const validateBackendApiKey = (req: express.Request, res: express.Response, next: express.NextFunction) => {
-  const backendApiKey = req.headers['x-backend-api-key'] as string;
-  const expectedKey = process.env.BACKEND_API_KEY;
-  
-  if (!expectedKey) {
-    return res.status(500).json({ error: 'Backend API key not configured' });
-  }
-  
-  if (!backendApiKey || backendApiKey !== expectedKey) {
-    return res.status(401).json({ error: 'Invalid backend API key' });
-  }
-  
-  next();
-};
-
-// Routes (protected with backend API key)
-app.use('/api/greenhouse', validateBackendApiKey, greenhouseRouter);
+// Routes (protected by CORS and rate limiting)
+app.use('/api/greenhouse', greenhouseRouter);
 
 // Health check endpoint
 app.get('/health', (req: express.Request, res: express.Response) => {
