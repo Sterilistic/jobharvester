@@ -226,8 +226,7 @@ const JobDetails: React.FC = () => {
                         
                         {candidate.company && (
                           <div className="text-sm text-muted-foreground">
-                            <span className="flex items-center gap-2"><Building /> {candidate.company}</span>
-                            {candidate.title && ` - ${candidate.title}`}
+                            <span className="flex items-center gap-2"><Building /> {candidate.company} {candidate.title && ` - ${candidate.title}`}</span>
                           </div>
                         )}
                         
