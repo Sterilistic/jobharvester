@@ -2,6 +2,7 @@ import axios from 'axios';
 import { Job, Candidate, ApiResponse } from '../types/greenhouse';
 
 const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:3001/api/greenhouse';
+const BACKEND_API_KEY = process.env.REACT_APP_BACKEND_API_KEY || 'your-backend-api-key';
 
 class ApiService {
   private apiKey: string | null = null;
@@ -25,6 +26,7 @@ class ApiService {
     }
     return {
       'x-api-key': apiKey,
+      'x-backend-api-key': BACKEND_API_KEY,
       'Content-Type': 'application/json',
     };
   }
