@@ -26,9 +26,6 @@ class ApiService {
       throw new Error('API key not set');
     }
     
-    // Debug: Log the backend API key (remove in production)
-    console.log('Backend API Key:', BACKEND_API_KEY);
-    
     return {
       'x-api-key': apiKey,
       'x-backend-api-key': BACKEND_API_KEY,

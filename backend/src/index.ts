@@ -49,9 +49,7 @@ const validateBackendApiKey = (req: express.Request, res: express.Response, next
 };
 
 // Routes (protected with backend API key)
-// Temporarily disabled for testing - REMOVE IN PRODUCTION!
-// app.use('/api/greenhouse', validateBackendApiKey, greenhouseRouter);
-app.use('/api/greenhouse', greenhouseRouter);
+app.use('/api/greenhouse', validateBackendApiKey, greenhouseRouter);
 
 // Health check endpoint
 app.get('/health', (req: express.Request, res: express.Response) => {
