@@ -26,6 +26,16 @@ class ApiService {
       throw new Error('API key not set');
     }
     
+    // Debug: Check what values we're getting
+    console.log('Environment check:');
+    console.log('REACT_APP_BACKEND_API_KEY:', process.env.REACT_APP_BACKEND_API_KEY);
+    console.log('BACKEND_API_KEY constant:', BACKEND_API_KEY);
+    console.log('Headers being sent:', {
+      'x-api-key': apiKey,
+      'x-backend-api-key': BACKEND_API_KEY,
+      'Content-Type': 'application/json',
+    });
+    
     return {
       'x-api-key': apiKey,
       'x-backend-api-key': BACKEND_API_KEY,
