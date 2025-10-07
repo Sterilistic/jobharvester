@@ -65,6 +65,7 @@ export class GreenhouseService {
           page,
           per_page: perPage,
           has_next_page: hasNextPage,
+          has_prev_page: page > 1,
         },
       };
     } catch (error: any) {
@@ -150,12 +151,34 @@ export class GreenhouseService {
         }
       );
 
+      // Check if there's a next page
+      let hasNextPage = false;
+      if (response.data.length === perPage) {
+        try {
+          const nextPageResponse = await axios.get(
+            `${this.baseURL}/candidates`,
+            {
+              headers: this.getAuthHeaders(),
+              params: {
+                page: page + 1,
+                per_page: 1,
+              },
+            }
+          );
+          hasNextPage = nextPageResponse.data.length > 0;
+        } catch (e) {
+          hasNextPage = true;
+        }
+      }
+
       return {
         candidates: response.data,
         meta: {
           total: response.data.length,
           page,
           per_page: perPage,
+          has_next_page: hasNextPage,
+          has_prev_page: page > 1,
         },
       };
     } catch (error: any) {
