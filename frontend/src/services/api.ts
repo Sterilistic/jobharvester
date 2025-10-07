@@ -1,7 +1,8 @@
 import axios from 'axios';
 import { Job, Candidate, ApiResponse } from '../types/greenhouse';
 
-const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:3001/api/greenhouse';
+const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:3001';
+const API_ENDPOINT = `${API_BASE_URL}/api/greenhouse`;
 const BACKEND_API_KEY = process.env.REACT_APP_BACKEND_API_KEY || 'your-backend-api-key';
 
 class ApiService {
@@ -33,7 +34,7 @@ class ApiService {
 
   async validateApiKey(apiKey: string): Promise<boolean> {
     try {
-      const response = await axios.post(`${API_BASE_URL}/validate-key`, {
+      const response = await axios.post(`${API_ENDPOINT}/validate-key`, {
         apiKey,
       });
       return response.data.valid;
@@ -44,7 +45,7 @@ class ApiService {
 
   async getJobs(page: number = 1, perPage: number = 2): Promise<ApiResponse<Job>> {
     try {
-      const response = await axios.get(`${API_BASE_URL}/jobs`, {
+      const response = await axios.get(`${API_ENDPOINT}/jobs`, {
         headers: this.getHeaders(),
         params: { page, per_page: perPage },
       });
@@ -56,7 +57,7 @@ class ApiService {
 
   async getJobById(jobId: number): Promise<Job> {
     try {
-      const response = await axios.get(`${API_BASE_URL}/jobs/${jobId}`, {
+      const response = await axios.get(`${API_ENDPOINT}/jobs/${jobId}`, {
         headers: this.getHeaders(),
       });
       return response.data;
@@ -67,7 +68,7 @@ class ApiService {
 
   async getCandidatesForJob(jobId: number, page: number = 1, perPage: number = 2): Promise<ApiResponse<Candidate>> {
     try {
-      const response = await axios.get(`${API_BASE_URL}/jobs/${jobId}/candidates`, {
+      const response = await axios.get(`${API_ENDPOINT}/jobs/${jobId}/candidates`, {
         headers: this.getHeaders(),
         params: { page, per_page: perPage },
       });
