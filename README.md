@@ -211,6 +211,14 @@ jobharvester/
 └── README.md
 ```
 
+## Design Decisions
+- **Backend Architecture**: 
+The application uses a proxy pattern where the Node.js backend acts as an intermediary between the React frontend and the Greenhouse API. This design choice eliminates CORS issues while providing a clean, secure interface. The backend implements comprehensive security measures including API key validation, rate limiting (100 requests per 15 minutes), and CORS restrictions to only allow requests from the configured frontend URL. All sensitive operations are protected with a backend API key system that requires both the Greenhouse API key and a separate backend authentication key.
+
+- **Frontend Architecture**: 
+The React frontend uses a component-based architecture with TypeScript for type safety and ShadCN UI components for a modern, consistent design. State management is handled through React hooks for simplicity, avoiding the complexity of external state management libraries. The application implements client-side routing with React Router for smooth navigation between the API key input, jobs listing, and job details pages. Pagination is handled both for job listings and candidate views, with a clean "load more" interface for candidates to improve user experience.
+
+
 ## License
 
 This project is for demonstration purposes.
